@@ -36,3 +36,16 @@
     $("#frequency").val("");
 
   })
+
+
+
+  database.ref().on("child_added", function(childSnapshot) {
+    var row = $("<tr>");
+    var tname = $("<td>").text(childSnapshot.val().name);
+    var tdest = $("<td>").text(childSnapshot.val().destination);
+    var tfirst = $("<td>").text(childSnapshot.val().first);
+    var tfreq = $("<td>").text(childSnapshot.val().frequency);
+    var tmin = $("<td>").attr("id", "min-away");
+    var trow = row.append(tname, tdest, tfirst, tfreq, tmin);
+    $("tbody").append(trow)
+  })
