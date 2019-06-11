@@ -12,3 +12,22 @@
   firebase.initializeApp(firebaseConfig);
 
   var database = firebase.database();
+
+  $("#submit").on("click", function(event) {
+    event.preventDefault();
+
+    var trainName = $("#train-name").val().trim();
+    var trainDest = $("#destination").val().trim();
+    var trainFirst = $("#first-train").val().trim();
+    var trainFreq = $("#frequency").val().trim();
+
+    var trainNewLine = {
+        name: trainName,
+        destination: trainDest,
+        first: trainFirst,
+        frequency: trainFreq
+    }
+
+    database.ref().push(trainNewLine)
+
+  })
