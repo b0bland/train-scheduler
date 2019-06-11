@@ -37,15 +37,22 @@
 
   })
 
-
-
   database.ref().on("child_added", function(childSnapshot) {
+    var trainFreq = childSnapshot.val().frequency;    
+    var firstTrain = childSnapshot.val().first;
+    var firstTrainConverted = moment(firstTrain, "HH:mm").subtract(1, "years");
+    var diffTime = moment().diff(moment(firstTrainConverted), "minutes");
+    var tRemainder = diffTime % trainFreq;
+    var tMinutesTillTrain = trainFreq - tRemainder;
+    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+
     var row = $("<tr>");
     var tname = $("<td>").text(childSnapshot.val().name);
     var tdest = $("<td>").text(childSnapshot.val().destination);
-    var tfirst = $("<td>").text(childSnapshot.val().first);
-    var tfreq = $("<td>").text(childSnapshot.val().frequency);
-    var tmin = $("<td>").attr("id", "min-away");
-    var trow = row.append(tname, tdest, tfirst, tfreq, tmin);
-    $("tbody").append(trow)
+    var tnext = $("<td>").text(tMinutesTillTrain);
+    var tfreq = $("<td>").text(trainFreq);
+    var tmin = $("<td>").text(moment(nextTrain).format("HH:mm"));
+    var trow = row.append(tname, tdest, tfreq, tmin, tnext);
+    $("tbody").append(trow);
+
   })
