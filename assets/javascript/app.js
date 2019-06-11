@@ -30,4 +30,9 @@
 
     database.ref().push(trainNewLine)
 
+    $("#train-name").val("");
+    $("#destination").val("");
+    $("#first-train").val("");
+    $("#frequency").val("");
+
   })
